@@ -14,7 +14,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -23,16 +23,30 @@
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="arun_portfolio_2">
+  <meta name="apple-mobile-web-app-title" content="arun">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>arun_portfolio_2</title>
+  <title>Arun</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+      .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex; /* Default Axis is X*/
+        justify-content: center; /* Main Axis */
+        align-items: center; /* Cross Axis */
+      }      .indicator{
+        width: 50vw;
+      }
+</style>
 </head>
-<body>
+<body style="overflow: hidden">
+<div id="loading_indicator" class="container">
+  <img class="indicator" src="./assets/loading.gif" />
+</div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -100,5 +114,15 @@
       loadMainDartJs();
     }
   </script>
+<script>
+  window.onload = function () {
+        setTimeout(function () {
+          var loadingIndicator =                 document.getElementById("loading_indicator");
+          if (loadingIndicator) {
+            loadingIndicator.remove();
+          }
+        }, 10000);
+};
+</script>
 </body>
 </html>

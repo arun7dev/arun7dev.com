@@ -6,7 +6,10 @@ import 'package:flutter/widgets.dart';
 import 'package:glass/glass.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hovering/hovering.dart';
+import 'package:mailto/mailto.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../constants.dart';
 
 
 class MyDesktopBody extends StatelessWidget {
@@ -26,7 +29,9 @@ class MyDesktopBody extends StatelessWidget {
   }
   Future ScrolltoItam(index) async{
     final context=index.currentContext!;
-    await Scrollable.ensureVisible(context);
+    await Scrollable.ensureVisible(context,duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,);
+
   }
 
   @override
@@ -37,9 +42,9 @@ class MyDesktopBody extends StatelessWidget {
       body: Column(
         children: [
           AppBar(
-            title: Text("Arun",style: GoogleFonts.getFont('Major Mono Display'),textScaleFactor:2 ),
+            title: Text("Arun",style: GoogleFonts.getFont('Major Mono Display',color: other_accent_color),textScaleFactor:2 ),
 
-            backgroundColor: Colors.pinkAccent,
+            backgroundColor: common_color,
 
             actions: [
               AppBarTitles("ABOUT",about,0,),
@@ -55,13 +60,29 @@ class MyDesktopBody extends StatelessWidget {
               height: height,
               child: SingleChildScrollView(
                 child: Column(
-                  
+
                   children: [
                     Container(key:about,child: EachPages(0, 800,context)),
                     Container(key:skills,child: EachPages(1, 500,context)),
                     Container(key:projects,child: EachPages(2, 800,context)),
                     Container(key:worksamples,child: EachPages(3, 800,context)),
                     Container(key:contact,child: EachPages(4, 800,context)),
+                    Container(
+                        color:Colors.black,
+                        child:Center(
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(text: 'Developed in 💙 with ',style: TextStyle(color: Colors.white)),
+                                TextSpan(
+                                  text: 'Flutter',
+                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                    )
 
                   ],
                 ),
@@ -103,15 +124,15 @@ class MyDesktopBody extends StatelessWidget {
 
 
     }
-    return Container(color: Colors.white,
+    return Container(color: other_accent_color,
     child: Text(""),);
 
   }
 
   Container About(height) {
-    const textcolor=Colors.white;
+    var textcolor=other_accent_color;
       return Container(
-      color: Colors.pinkAccent,
+      color: common_color,
       height: height,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -130,7 +151,7 @@ class MyDesktopBody extends StatelessWidget {
                 style: GoogleFonts.getFont('Big Shoulders Text',color: textcolor),  ),
             ),),
 
-            Center(child: Icon(Icons.arrow_downward_outlined,color: Colors.white,))
+            Center(child: Icon(Icons.arrow_downward_outlined,color: other_accent_color,))
           ],
         ),
       ),
@@ -149,29 +170,29 @@ class MyDesktopBody extends StatelessWidget {
     else{
       ih=height/4;
     }
-    const textcolor=Colors.white;
+    var textcolor=other_accent_color;
     return Container(
-
+        color: other_accent_color,
       //height: height,
       child:Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ElevatedButton(onPressed: (){}, child: Text("Skills",style: GoogleFonts.getFont('Staatliches',color: Colors.white),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+            ElevatedButton(onPressed: (){}, child: Text("Skills",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: BorderSide(color: Colors.pinkAccent)
+                      side: BorderSide(color: common_color!)
                   )
               ),
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.pinkAccent),
+              backgroundColor: MaterialStateProperty.all<Color>(common_color!),
             )
             ),
             Row(
               children: [
-                Expanded(child:  Center(child: Text("Programming languages",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),),
-                Expanded(child:  Center(child: Text("Frameworks",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 )),),
-                Expanded(child:  Center(child: Text("Databases",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 )),)
+                Expanded(child:  Center(child: Text("Programming languages",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),),
+                Expanded(child:  Center(child: Text("Frameworks",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 )),),
+                Expanded(child:  Center(child: Text("Databases",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 )),)
               ],
             ),
             Row(
@@ -216,7 +237,7 @@ class MyDesktopBody extends StatelessWidget {
                     children: [
                       hoverCrossFadeWidget(ih,"assets/logos/firebase.png","Firebase"),
                       hoverCrossFadeWidget(ih,"assets/logos/sql.png","SQL"),
-                      hoverCrossFadeWidget(ih,"assets/logos/MongoDB.png","MongoDB"),
+                      hoverCrossFadeWidget(ih,"assets/logos/mongoDB.png","MongoDB"),
 
                     ],
                     spacing: 2,runSpacing: 2,
@@ -233,24 +254,24 @@ class MyDesktopBody extends StatelessWidget {
   }
 
   Widget Projects(height,context) {
-    const textcolor=Colors.white;
+    var textcolor=other_accent_color;
     if(MediaQuery.of(context).size.width>950){
       return  Container(
-          color: Colors.black,
+          color: accent_color,
           //height: height,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Projects",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+                ElevatedButton(onPressed: (){}, child: Text("Projects",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(color: Colors.white)
+                            side: BorderSide(color: other_accent_color)
                         )
                     ),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                  backgroundColor: MaterialStateProperty.all<Color>(accent_color),
                 )
                 ),
                 Row(
@@ -258,7 +279,7 @@ class MyDesktopBody extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          Center(child: Text("VFXfood",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                          Center(child: Text("VFXfood",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -270,7 +291,7 @@ class MyDesktopBody extends StatelessWidget {
 
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 8),
-                                    child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3sniezC");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Colors.pinkAccent),)),
+                                    child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3sniezC");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
                                   ),
                                 ],
                               ),
@@ -284,7 +305,7 @@ class MyDesktopBody extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          Center(child: Text("Vanilai",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                          Center(child: Text("Vanilai",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -296,7 +317,7 @@ class MyDesktopBody extends StatelessWidget {
 
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 8),
-                                    child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3xNRytQ");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Colors.pinkAccent),)),
+                                    child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3xNRytQ");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
                                   ),
                                 ],
                               ),
@@ -310,7 +331,7 @@ class MyDesktopBody extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          Center(child: Text("Ballot",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                          Center(child: Text("Ballot",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -322,7 +343,7 @@ class MyDesktopBody extends StatelessWidget {
 
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 8),
-                                    child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev/final_year_project.git");},child: Text("Github",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Colors.pinkAccent),)),
+                                    child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev/final_year_project.git");},child: Text("Github",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
                                   ),
                                 ],
                               ),
@@ -344,21 +365,21 @@ class MyDesktopBody extends StatelessWidget {
     else{
 
       return   Container(
-          color: Colors.black,
+          color: accent_color,
           //height: height,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Projects",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+                ElevatedButton(onPressed: (){}, child: Text("Projects",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
-                          side: BorderSide(color: Colors.white)
+                          side: BorderSide(color: other_accent_color)
                       )
                   ),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor: MaterialStateProperty.all<Color>(other_accent_color),
                 )
                 ),
 
@@ -367,24 +388,35 @@ class MyDesktopBody extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          Center(child: Text("VFXfood",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
-                          GestureDetector(child: Image.asset("assets/projects/2.png"),onTap: (){_launchUrl("https://bit.ly/3sniezC");},)
+                          Center(child: Text("VFXfood",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+
+                              child: Image.asset("assets/projects/2.png"),onTap: (){_launchUrl("https://bit.ly/3sniezC");},),
+                          )
                         ],
                       ),
                     ),
                     Expanded(
                       child: Column(
                         children: [
-                          Center(child: Text("Vanilai",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
-                          GestureDetector(child: Image.asset("assets/projects/1.png"),onTap: (){_launchUrl("https://bit.ly/3xNRytQ");},)
+                          Center(child: Text("Vanilai",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                          MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(child: Image.asset("assets/projects/1.png"),onTap: (){_launchUrl("https://bit.ly/3xNRytQ");},))
                         ],
                       ),
                     ),
                     Expanded(
                       child: Column(
                         children: [
-                          Center(child: Text("Ballot",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
-                          GestureDetector(child: Image.asset("assets/projects/3.png"),onTap: (){_launchUrl("https://github.com/arun7dev/final_year_project.git");},)
+                          Center(child: Text("Ballot",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                          MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(child: Image.asset("assets/projects/3.png"),onTap: (){_launchUrl("https://github.com/arun7dev/final_year_project.git");},))
+
+
                         ],
                       ),
                     ),
@@ -402,18 +434,18 @@ class MyDesktopBody extends StatelessWidget {
 
   Widget WorkSamples(height,context){
     return Container(
-      color: Colors.pinkAccent,
+      color: common_color,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          ElevatedButton(onPressed: (){}, child: Text("Work Samples",style: GoogleFonts.getFont('Staatliches',color: Colors.pinkAccent),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+          ElevatedButton(onPressed: (){}, child: Text("Work Samples",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(color: Colors.white)
+                    side: BorderSide(color: other_accent_color)
                 )
             ),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            backgroundColor: MaterialStateProperty.all<Color>(other_accent_color),
           )
           ),
           Column(
@@ -421,22 +453,22 @@ class MyDesktopBody extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(child: Text("Github Profile",style: GoogleFonts.getFont('Staatliches',color: Colors.white),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                  Center(child: Text("Github Profile",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev");},child: Text("Github",style: TextStyle(color:Colors.pinkAccent),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Colors.white),)),
+                    child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev");},child: Text("Github",style: TextStyle(color:common_color),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(other_accent_color),)),
                   ),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(child: Text("Developer account link",style: GoogleFonts.getFont('Staatliches',color: Colors.white),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                  Center(child: Text("Developer account link",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: ElevatedButton(onPressed: (){_launchUrl("https://play.google.com/store/apps/dev?id=5595603757420873953");},child: Text("Developer account link",style: TextStyle(color:Colors.pinkAccent),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Colors.white),)),
+                    child: ElevatedButton(onPressed: (){_launchUrl("https://play.google.com/store/apps/dev?id=5595603757420873953");},child: Text("Developer account",style: TextStyle(color:common_color),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(other_accent_color),)),
                   ),
                 ],
               ),
@@ -449,20 +481,22 @@ class MyDesktopBody extends StatelessWidget {
 
   Widget Contact(height,context){
     return Container(
-
+      color: accent_color,
       //height: height,
         child:Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ElevatedButton(onPressed: (){}, child: Text("Get in touch",style: GoogleFonts.getFont('Staatliches',color: Colors.white),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+              ElevatedButton(
+
+                  onPressed: (){}, child: Text("Get in touch",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:5 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
-                        side: BorderSide(color: Colors.pinkAccent)
+                        side: BorderSide(color: common_color!)
                     )
                 ),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.pinkAccent),
+                backgroundColor: MaterialStateProperty.all<Color>(common_color!),
               )
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -470,7 +504,7 @@ class MyDesktopBody extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      color: Colors.pinkAccent,
+                      color: common_color,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -480,10 +514,10 @@ class MyDesktopBody extends StatelessWidget {
                             children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/20),
-                                child: Icon(Icons.house,size: 50,color: Colors.white,),
+                                child: Icon(Icons.house,size: 50,color: other_accent_color,),
                               ),
-                              Text("Location",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textScaleFactor: 2,),
-                              Text("Chennai,India",style: TextStyle(color: Colors.white),textScaleFactor: 1,),
+                              Text("Location",style: TextStyle(fontWeight: FontWeight.bold,color: other_accent_color),textScaleFactor: 2,),
+                              Text("Chennai,India",style: TextStyle(color: other_accent_color),textScaleFactor: 1,),
                             ],
                           ),
                         ),
@@ -493,7 +527,7 @@ class MyDesktopBody extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      color: Colors.pinkAccent,
+                      color: common_color,
 
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -507,10 +541,10 @@ class MyDesktopBody extends StatelessWidget {
 
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/20),
-                                child: Icon(Icons.phone,size: 50,color: Colors.white,),
+                                child: Icon(Icons.phone,size: 50,color: other_accent_color,),
                               ),
-                              Text("Phone",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textScaleFactor: 2,),
-                              Text("8072269982",style: TextStyle(color: Colors.white),textScaleFactor: 1,),
+                              Text("Phone",style: TextStyle(fontWeight: FontWeight.bold,color: other_accent_color),textScaleFactor: 2,),
+                              Text("8072269982",style: TextStyle(color: other_accent_color),textScaleFactor: 1,),
                             ],
                           ),
                         ),
@@ -519,25 +553,33 @@ class MyDesktopBody extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      color: Colors.pinkAccent,
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: (){
+                          launchMailto();
+                        },
+                        child: Card(
+                          color: common_color,
 
 
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
 
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
 
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/20),
-                                child: Icon(Icons.email,size: 50,color: Colors.white,),
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/20),
+                                    child: Icon(Icons.email,size: 50,color: other_accent_color,),
+                                  ),
+                                  Text("Email",style: TextStyle(fontWeight: FontWeight.bold,color: other_accent_color),textScaleFactor: 2,),
+                                  Text("arun042000@gmail.com",style: TextStyle(color: other_accent_color),textScaleFactor: 1,),
+                                ],
                               ),
-                              Text("Email",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),textScaleFactor: 2,),
-                              Text("arun042000@gmail.com",style: TextStyle(color: Colors.white),textScaleFactor: 1,),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -560,7 +602,7 @@ class MyDesktopBody extends StatelessWidget {
                   secondChild: Container(
                       width: ih,
                       height: ih,
-                      child: Center(child: Text(title,style: GoogleFonts.getFont('Work Sans',color: Colors.pinkAccent),)),),
+                      child: Center(child: Text(title,style: GoogleFonts.getFont('Work Sans',color: common_color),)),),
                 );
   }
 
@@ -572,8 +614,8 @@ class MyDesktopBody extends StatelessWidget {
                   style: GoogleFonts.getFont('Work Sans'),
               ),
               style: OutlinedButton.styleFrom(
-                primary: Colors.white,
-                side: BorderSide(color: Colors.white, width: 2),
+                primary: other_accent_color,
+                side: BorderSide(color: other_accent_color, width: 2),
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
               onPressed: () {
@@ -594,4 +636,14 @@ final List<String> imgList = [
 
 void _launchUrl(url) async {
   if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
+}
+
+launchMailto() async {
+  final mailtoLink = Mailto(
+    to: ['arun042000@gmail.com'],
+  );
+  // Convert the Mailto instance into a string.
+  // Use either Dart's string interpolation
+  // or the toString() method.
+  await launch('$mailtoLink');
 }

@@ -41,6 +41,8 @@ dependencies:
   cached_network_image:
   hovering:
   url_launcher:
+  mailto: ^2.0.0
+  animated_background:
 
 dev_dependencies:
   flutter_test:
