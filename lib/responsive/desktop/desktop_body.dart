@@ -1,3 +1,4 @@
+import 'package:animated_background/animated_background.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,13 +13,38 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../constants.dart';
 
 
-class MyDesktopBody extends StatelessWidget {
+class MyDesktopBody extends StatefulWidget {
+  @override
+  State<MyDesktopBody> createState() => _MyDesktopBodyState();
+}
+
+class _MyDesktopBodyState extends State<MyDesktopBody>  with TickerProviderStateMixin {
   final ScrollController _controller = ScrollController();
+
   final about = GlobalKey();
+
   final skills = GlobalKey();
+
   final projects = GlobalKey();
+
   final worksamples = GlobalKey();
+
   final contact = GlobalKey();
+
+  late Image image1;
+
+  @override
+  void initState() {
+    super.initState();
+    image1 = Image.asset("assets/images/cartoon.png");
+
+
+  }
+
+  void didChangeDependencies() {
+    precacheImage(image1.image, context);
+    super.didChangeDependencies();
+  }
 
   void _animateToIndex(int index,double height) {
     _controller.animateTo(
@@ -27,6 +53,7 @@ class MyDesktopBody extends StatelessWidget {
       curve: Curves.fastOutSlowIn,
     );
   }
+
   Future ScrolltoItam(index) async{
     final context=index.currentContext!;
     await Scrollable.ensureVisible(context,duration: const Duration(milliseconds: 400),
@@ -129,33 +156,93 @@ class MyDesktopBody extends StatelessWidget {
 
   }
 
-  Container About(height) {
+  Widget About(height) {
     var textcolor=other_accent_color;
       return Container(
-      color: common_color,
-      height: height,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children:  [
-            Center(child: FittedBox(child: Text("Arun",textScaleFactor: 20, style: GoogleFonts.getFont('Francois One',color: textcolor),))),
-            Center(child: FittedBox(child: Text("Aspiring Developer",textScaleFactor: 7  ,style: GoogleFonts.getFont('Work Sans',color: textcolor),))),
-            Center(child:SizedBox(
-              width: 1000,
-              child: Text(
-                'Looking forward to earning the position of Software Engineer at a leading organization to showcase my skills in programming to generate high-end solutions to general software issues along with drawing better user experience.',
-                overflow: TextOverflow.clip,
-                maxLines: 7,
-                textScaleFactor: 2,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.getFont('Big Shoulders Text',color: textcolor),  ),
-            ),),
+        height: height,
+        child: AnimatedBackground(
+          behaviour: RandomParticleBehaviour(
+            options: const  ParticleOptions(
 
-            Center(child: Icon(Icons.arrow_downward_outlined,color: other_accent_color,))
-          ],
+              baseColor:  Color(0xffff6780),
+              spawnOpacity: 0.0,
+              opacityChangeRate: 0.25,
+              minOpacity: 0.1,
+              maxOpacity: 0.4,
+              spawnMinSpeed: 30.0,
+              spawnMaxSpeed: 70.0,
+              spawnMinRadius: 7.0,
+              spawnMaxRadius: 15.0,
+              particleCount: 40,
+            ),
+          ),
+          vsync: this,
+          child: Container(
+            color: common_color?.withOpacity(0.5),
+
+            height: height,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MediaQuery.of(context).size.width<=1500?Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children:  [
+
+                  Center(child: FittedBox(child: Text("Arun",textScaleFactor: 20, style: GoogleFonts.getFont('Francois One',color: textcolor),))),
+                  Center(child: FittedBox(child: Text("Aspiring Developer",textScaleFactor: 7  ,style: GoogleFonts.getFont('Work Sans',color: textcolor),))),
+                  Center(child:SizedBox(
+                    width: 1000,
+                    child: Text(
+                      'Looking forward to earning the position of Software Engineer at a leading organization to showcase my skills in programming to generate high-end solutions to general software issues along with drawing better user experience.',
+                      overflow: TextOverflow.clip,
+                      maxLines: 7,
+                      textScaleFactor: 2,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.getFont('Big Shoulders Text',color: textcolor),  ),
+                  ),),
+
+                  Center(child: Icon(Icons.arrow_downward_outlined,color: other_accent_color,))
+                ],
+              ):
+              Stack(
+
+                fit: StackFit.expand,
+                children: [
+                  Positioned(
+
+                    bottom:MediaQuery.of(context).size.height*0.1,
+                    right: MediaQuery.of(context).size.width*0.1,
+                    child: image1,
+                  ),
+                  Positioned(
+                    bottom:MediaQuery.of(context).size.height*0.1,
+                    left: MediaQuery.of(context).size.width*0.1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:  [
+
+                        FittedBox(child: Text("Arun",textScaleFactor: 20, style: GoogleFonts.getFont('Francois One',color: textcolor),)),
+                        FittedBox(child: Text("Aspiring Developer",textScaleFactor: 7  ,style: GoogleFonts.getFont('Work Sans',color: textcolor),)),
+                        SizedBox(
+                          width: 1000,
+                          child: Text(
+                            'Looking forward to earning the position of Software Engineer at a leading organization to showcase my skills in programming to generate high-end solutions to general software issues along with drawing better user experience.',
+                            overflow: TextOverflow.clip,
+                            maxLines: 7,
+                            textScaleFactor: 2,
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.getFont('Big Shoulders Text',color: textcolor),  ),
+                        ),
+
+                        Center(child: Icon(Icons.arrow_downward_outlined,color: other_accent_color,))
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-      ),
-    );
+      );
 
 
   }
@@ -593,7 +680,6 @@ class MyDesktopBody extends StatelessWidget {
         )
     );
   }
-
 
   HoverCrossFadeWidget hoverCrossFadeWidget(ih,location,title) {
     return HoverCrossFadeWidget(

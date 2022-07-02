@@ -1,3 +1,4 @@
+import 'package:animated_background/animated_background.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,15 +71,38 @@ import '../../constants.dart';
 //   }
 // }
 
-class MyMobileBody extends StatelessWidget {
+class MyMobileBody extends StatefulWidget {
+  @override
+  State<MyMobileBody> createState() => _MyMobileBodyState();
+}
+
+class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMixin{
   final ScrollController _controller = ScrollController();
+
   final about = GlobalKey();
+
   final skills = GlobalKey();
+
   final projects = GlobalKey();
+
   final worksamples = GlobalKey();
+
   final contact = GlobalKey();
 
+  late Image image1;
 
+  @override
+  void initState() {
+    super.initState();
+    image1 = Image.asset("assets/images/cartoon.png");
+
+
+  }
+
+  void didChangeDependencies() {
+    precacheImage(image1.image, context);
+    super.didChangeDependencies();
+  }
 
   void _animateToIndex(int index,double height) {
     _controller.animateTo(
@@ -87,12 +111,12 @@ class MyMobileBody extends StatelessWidget {
       curve: Curves.fastOutSlowIn,
     );
   }
+
   Future ScrolltoItam(index) async{
     final context=index.currentContext!;
     await Scrollable.ensureVisible(context,duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOut,);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +134,7 @@ class MyMobileBody extends StatelessWidget {
           // Important: Remove any padding from the ListView.
 
           children: <Widget>[
+            Expanded(child: image1),
             Center(child: Text("Arun",style: GoogleFonts.getFont('Major Mono Display',color: other_accent_color,),textScaleFactor: 3,)),
             AppBarTitles("ABOUT",about,0,context),
             AppBarTitles("SKILLS",skills,800,context),
@@ -120,56 +145,77 @@ class MyMobileBody extends StatelessWidget {
         ),
       ),
 
-      body: Column(
-        children: [
-          Expanded(
-            child: SizedBox(
-              height: height,
-              child: SingleChildScrollView(
-                child: Column(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: AnimatedBackground(
+          behaviour: RandomParticleBehaviour(
+            options: const  ParticleOptions(
 
-                  children: [
-                    Container(key:about,child: EachPages(0, 800.0,context)),
-                    Container(key:skills,child: EachPages(1, 500.0,context)),
-                    Container(key:projects,child: EachPages(2, 1500.0,context)),
-                    Container(key:worksamples,child: EachPages(3, 800,context)),
-                    Container(key:contact,child: EachPages(4, 800,context)),
-                    Container(
-                      color:Colors.black,
-                        child:Center(
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(text: 'Developed in 💙 with ',style: TextStyle(color: Colors.white)),
-                                TextSpan(
-                                  text: 'Flutter',
-                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                    )
-                  ],
-                ),
-              ),
+              baseColor:  Color(0xffff6780),
+              spawnOpacity: 0.0,
+              opacityChangeRate: 0.25,
+              minOpacity: 0.1,
+              maxOpacity: 0.4,
+              spawnMinSpeed: 30.0,
+              spawnMaxSpeed: 70.0,
+              spawnMinRadius: 7.0,
+              spawnMaxRadius: 15.0,
+              particleCount: 40,
             ),
-          )
-          // ListView.builder(
-          //   shrinkWrap: true,
-          //   scrollDirection: Axis.vertical,
-          //   controller: _controller,
-          //   itemCount: 7,
-          //   itemBuilder: (_, i) {
-          //     return Flexible(
-          //       child: AspectRatio(
-          //         aspectRatio: 16/9,
-          //         child:EachPages(i,height*0.7)
-          //       ),
-          //     );
-          //   },
-          // ),
-        ],
+          ),
+          vsync: this,
+          child: Column(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: height,
+                  child: SingleChildScrollView(
+                    child: Column(
+
+                      children: [
+                        Container(key:about,child: EachPages(0, 800.0,context)),
+                        Container(key:skills,child: EachPages(1, 500.0,context)),
+                        Container(key:projects,child: EachPages(2, 2100.0,context)),
+                        Container(key:worksamples,child: EachPages(3, 800,context)),
+                        Container(key:contact,child: EachPages(4, 800,context)),
+                        Container(
+                          color:Colors.black,
+                            child:Center(
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(text: 'Developed in 💙 with ',style: TextStyle(color: Colors.white)),
+                                    TextSpan(
+                                      text: 'Flutter',
+                                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //   scrollDirection: Axis.vertical,
+              //   controller: _controller,
+              //   itemCount: 7,
+              //   itemBuilder: (_, i) {
+              //     return Flexible(
+              //       child: AspectRatio(
+              //         aspectRatio: 16/9,
+              //         child:EachPages(i,height*0.7)
+              //       ),
+              //     );
+              //   },
+              // ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -198,7 +244,7 @@ class MyMobileBody extends StatelessWidget {
   Widget About(height,context) {
     var textcolor=other_accent_color;
     return Container(
-      color: common_color,
+      color: common_color?.withOpacity(0.5),
      // height: MediaQuery.of(context).size.height*0.8,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -322,9 +368,9 @@ class MyMobileBody extends StatelessWidget {
 
   Container Projects(height,context) {
     var textcolor=other_accent_color;
-      return  Container(
+      return  (MediaQuery.of(context).size.height<1050&&MediaQuery.of(context).size.width<415)?Container(
           color: accent_color,
-          height: MediaQuery.of(context).size.height<900?height:MediaQuery.of(context).size.height*2,
+          height: 1100,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -346,8 +392,122 @@ class MyMobileBody extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Expanded(child: Image.asset("assets/projects/2.png")),
-                          Flexible(child: Column(
+                          Expanded(
+                              flex: 5,
+                              child: Image.asset("assets/projects/2.png")),
+                          Flexible(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("This was my internship project with Mist VFX company. VFX FOOD is an online VFX & Animation reporter. Which provides industries latest & trusted information of news, updates, articles, interviews, and jobs all over the world.",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8),
+                                  child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3sniezC");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Center(child: Text("Vanilai",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Image.asset("assets/projects/1.png")),
+                          Flexible(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Vanilai is a simple weather app built with a open API providing necessary weather updates of users current location",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8),
+                                  child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3xNRytQ");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Center(child: Text("Ballot",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Image.asset("assets/projects/3.png")),
+                          Flexible(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Ballot is a election application created for conducting student council election.This was my final year college project",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8),
+                                  child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev/final_year_project.git");},child: Text("Github",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+      ):Container(
+          color: accent_color,
+          height: 1500,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                ElevatedButton(onPressed: (){}, child: Text("Projects",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          side: BorderSide(color: other_accent_color)
+                      )
+                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(other_accent_color),
+                )
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Center(child: Text("VFXfood",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Image.asset("assets/projects/2.png")),
+                          Flexible(
+                            flex: 8,
+                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("This was my internship project with Mist VFX company. VFX FOOD is an online VFX & Animation reporter. Which provides industries latest & trusted information of news, updates, articles, interviews, and jobs all over the world.",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
@@ -372,8 +532,12 @@ class MyMobileBody extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Expanded(child: Image.asset("assets/projects/1.png")),
-                          Flexible(child: Column(
+                          Expanded(
+                              flex: 5,
+                              child: Image.asset("assets/projects/1.png")),
+                          Flexible(
+                            flex: 8,
+                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Vanilai is a simple weather app built with a open API providing necessary weather updates of users current location",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
@@ -398,8 +562,12 @@ class MyMobileBody extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Expanded(child: Image.asset("assets/projects/3.png")),
-                          Flexible(child: Column(
+                          Expanded(
+                              flex: 5,
+                              child: Image.asset("assets/projects/3.png")),
+                          Flexible(
+                          flex: 8,
+                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Ballot is a election application created for conducting student council election.This was my final year college project",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
@@ -484,7 +652,11 @@ class MyMobileBody extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ElevatedButton(onPressed: (){}, child: Text("Get in touch",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+              ElevatedButton(
+
+                  onPressed: (){
+
+                  }, child: Text("Get in touch",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -591,7 +763,6 @@ class MyMobileBody extends StatelessWidget {
         child: Center(child: Text(title,style: GoogleFonts.getFont('Work Sans',color: common_color,fontSize: 10),)),),
     );
   }
-
 
   Padding AppBarTitles(title,index,height,context) {
     return Padding(
