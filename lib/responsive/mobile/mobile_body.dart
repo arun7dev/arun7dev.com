@@ -6,7 +6,8 @@ import 'package:hovering/hovering.dart';
 import 'package:mailto/mailto.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../constants.dart';
+import '../../commons/consts.dart';
+import '../../commons/constants.dart';
 
 // class MyDesktopBody extends StatelessWidget {
 //   const MyDesktopBody({Key? key}) : super(key: key);
@@ -94,7 +95,7 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
   @override
   void initState() {
     super.initState();
-    image1 = Image.asset("assets/images/cartoon.png");
+    image1 = Image.asset(Strings.cartoonPNG);
 
 
   }
@@ -124,23 +125,23 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
     return Scaffold(
       appBar:  AppBar(
 
-        backgroundColor: common_color,
-        title: Text("Arun",style: GoogleFonts.getFont('Major Mono Display',color: other_accent_color),textScaleFactor: 3,),),
+        backgroundColor: Consts.common_color,
+        title: Text(Strings.ARUN,style: GoogleFonts.getFont(Strings.MMDFONT,color: Consts.OAC),textScaleFactor: 3,),),
 
       endDrawer: Drawer(
 
-        backgroundColor: common_color,
+        backgroundColor: Consts.common_color,
         child: Column(
           // Important: Remove any padding from the ListView.
 
           children: <Widget>[
             Expanded(child: image1),
-            Center(child: Text("Arun",style: GoogleFonts.getFont('Major Mono Display',color: other_accent_color,),textScaleFactor: 3,)),
-            AppBarTitles("ABOUT",about,0,context),
-            AppBarTitles("SKILLS",skills,800,context),
-            AppBarTitles("PROJECTS",projects,800+500,context),
-            AppBarTitles("WORK SAMPLES",worksamples,800+500+800,context),
-            AppBarTitles("CONTACT", contact, 800, context),
+            Center(child: Text(Strings.ARUN,style: GoogleFonts.getFont(Strings.MMDFONT,color: Consts.OAC,),textScaleFactor: 3,)),
+            AppBarTitles(Strings.ABOUT,about,0,context),
+            AppBarTitles(Strings.SKILLS,skills,800,context),
+            AppBarTitles(Strings.PROJECTS,projects,800+500,context),
+            AppBarTitles(Strings.WORKSAMPLES,worksamples,800+500+800,context),
+            AppBarTitles(Strings.CONTACT, contact, 800, context),
           ],
         ),
       ),
@@ -184,9 +185,9 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                               child: Text.rich(
                                 TextSpan(
                                   children: [
-                                    TextSpan(text: 'Developed in 💙 with ',style: TextStyle(color: Colors.white)),
+                                    TextSpan(text: Strings.DevelopedInLoveWith,style: TextStyle(color: Colors.white)),
                                     TextSpan(
-                                      text: 'Flutter',
+                                      text: Strings.Flutter,
                                       style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
                                     ),
                                   ],
@@ -236,36 +237,36 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
 
 
     }
-    return Container(color: other_accent_color,
+    return Container(color: Consts.OAC,
       child: Text(""),);
 
   }
 
   Widget About(height,context) {
-    var textcolor=other_accent_color;
+    var textcolor=Consts.OAC;
     return Container(
-      color: common_color?.withOpacity(0.5),
+      color: Consts.common_color?.withOpacity(0.5),
      // height: MediaQuery.of(context).size.height*0.8,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children:  [
-            Center(child: FittedBox(child: Text("Arun",textScaleFactor: 20, style: GoogleFonts.getFont('Francois One',color: textcolor),))),
-            Center(child: FittedBox(child: Text("Aspiring Developer",textScaleFactor: 6  ,style: GoogleFonts.getFont('Work Sans',color: textcolor),))),
+            Center(child: FittedBox(child: Text(Strings.ARUN,textScaleFactor: 20, style: GoogleFonts.getFont(Strings.FSFONT,color: textcolor),))),
+            Center(child: FittedBox(child: Text(Strings.AspiringDeveloper,textScaleFactor: 6  ,style: GoogleFonts.getFont(Strings.WSFONT,color: textcolor),))),
             Center(child:SizedBox(
 
               child: Text(
-                'Looking forward to earning the position of Software Engineer at a leading organization to showcase my skills in programming to generate high-end solutions to general software issues along with drawing better user experience.',
+                Strings.Description,
                 overflow: TextOverflow.clip,
                 maxLines: 10,
                 textScaleFactor: 1.5,
                 textAlign: TextAlign.center,
-                style: GoogleFonts.getFont('Big Shoulders Text',color: textcolor),  ),
+                style: GoogleFonts.getFont(Strings.BSTFONT,color: textcolor),  ),
             ),),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 50),
-              child: Center(child: Icon(Icons.arrow_downward_outlined,color: other_accent_color,)),
+              child: Center(child: Icon(Icons.arrow_downward_outlined,color: Consts.OAC,)),
             )
           ],
         ),
@@ -296,9 +297,9 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
     else{
       ih=height/9;
     }
-    var textcolor=other_accent_color;
+    var textcolor=Consts.OAC;
     return Container(
-        color: other_accent_color,
+        color: Consts.OAC,
         height: height,
         child:Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -307,51 +308,51 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  ElevatedButton(onPressed: (){}, child: Text("Skills",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+                  ElevatedButton(onPressed: (){}, child: Text(Strings.SKILLS,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.OAC),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(color: common_color!)
+                            side: BorderSide(color: Consts.common_color!)
                         )
                     ),
-                    backgroundColor: MaterialStateProperty.all<Color>(common_color!),
+                    backgroundColor: MaterialStateProperty.all<Color>(Consts.common_color!),
                   )
                   ),
-                  Expanded(child:  Center(child: Text("Programming languages",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 )),),
+                  Expanded(child:  Center(child: Text(Strings.Programminglanguages,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 )),),
                   Expanded(child: Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      hoverCrossFadeWidget(ih,"assets/logos/dart.png","Dart"),
-                      hoverCrossFadeWidget(ih,"assets/logos/python.png","Python"),
-                      hoverCrossFadeWidget(ih,"assets/logos/java.png","Java"),
-                      hoverCrossFadeWidget(ih,"assets/logos/c.png","C"),
-                      hoverCrossFadeWidget(ih,"assets/logos/c++.png","C++"),
-                      hoverCrossFadeWidget(ih,"assets/logos/js.png","JavaScript"),
-                      hoverCrossFadeWidget(ih,"assets/logos/perl.png","Perl"),
+                      hoverCrossFadeWidget(ih,Strings.DartAsset,Strings.Dart),
+                      hoverCrossFadeWidget(ih,Strings.PythonAsset,Strings.Python),
+                      hoverCrossFadeWidget(ih,Strings.JavaAsset,Strings.Java),
+                      hoverCrossFadeWidget(ih,Strings.CAsset,Strings.C),
+                      hoverCrossFadeWidget(ih,Strings.CppAsset,Strings.Cpp),
+                      hoverCrossFadeWidget(ih,Strings.JSAsset,Strings.JS),
+                      hoverCrossFadeWidget(ih,Strings.PerlAsset,Strings.Perl),
 
                     ],
                     spacing: 4,runSpacing: 4,
                   )),
-                  Expanded(child:  Center(child: Text("Frameworks",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 )),),
+                  Expanded(child:  Center(child: Text(Strings.Frameworks,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 )),),
                   Expanded(child: Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      hoverCrossFadeWidget(ih,"assets/logos/flutter.png","Flutter"),
-                      hoverCrossFadeWidget(ih,"assets/logos/react.png","React"),
-                      hoverCrossFadeWidget(ih,"assets/logos/node.png","NodeJS"),
-                      hoverCrossFadeWidget(ih,"assets/logos/ejs.png","ExpressJS"),
+                      hoverCrossFadeWidget(ih,Strings.FlutterAsset,Strings.Flutter),
+                      hoverCrossFadeWidget(ih,Strings.ReactAsset,Strings.React),
+                      hoverCrossFadeWidget(ih,Strings.NodeJSAsset,Strings.NodeJS),
+                      hoverCrossFadeWidget(ih,Strings.ExpressJSAsset,Strings.ExpressJS),
 
 
                     ],
                     spacing: 2,runSpacing: 2,
                   )),
-                  Expanded(child:  Center(child: Text("Databases",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 )),),
+                  Expanded(child:  Center(child: Text(Strings.Databases,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 )),),
                   Expanded(child: Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      hoverCrossFadeWidget(ih,"assets/logos/firebase.png","Firebase"),
-                      hoverCrossFadeWidget(ih,"assets/logos/sql.png","SQL"),
-                      hoverCrossFadeWidget(ih,"assets/logos/mongoDB.png","MongoDB"),
+                      hoverCrossFadeWidget(ih,Strings.FirebaseAsset,Strings.Firebase),
+                      hoverCrossFadeWidget(ih,Strings.SQLAsset,Strings.SQL),
+                      hoverCrossFadeWidget(ih,Strings.MongoDBAsset,Strings.MongoDB),
 
                     ],
                     spacing: 2,runSpacing: 2,
@@ -367,44 +368,44 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
   }
 
   Container Projects(height,context) {
-    var textcolor=other_accent_color;
+    var textcolor=Consts.OAC;
       return  (MediaQuery.of(context).size.height<1050&&MediaQuery.of(context).size.width<415)?Container(
-          color: accent_color,
+          color: Consts.accent_color,
           height: 1100,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Projects",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+                ElevatedButton(onPressed: (){}, child: Text(Strings.PROJECTS,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
-                          side: BorderSide(color: other_accent_color)
+                          side: BorderSide(color: Consts.OAC)
                       )
                   ),
-                  backgroundColor: MaterialStateProperty.all<Color>(other_accent_color),
+                  backgroundColor: MaterialStateProperty.all<Color>(Consts.OAC),
                 )
                 ),
                 Expanded(
                   child: Column(
                     children: [
-                      Center(child: Text("VFXfood",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Center(child: Text(Strings.VFXfood,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               flex: 5,
-                              child: Image.asset("assets/projects/2.png")),
+                              child: Image.asset(Strings.VFXfoodAsset)),
                           Flexible(
                             flex: 8,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("This was my internship project with Mist VFX company. VFX FOOD is an online VFX & Animation reporter. Which provides industries latest & trusted information of news, updates, articles, interviews, and jobs all over the world.",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+                                Text(Strings.VFXFoodDescription,style: GoogleFonts.getFont(Strings.OSFONT,color: textcolor),  ),
 
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8),
-                                  child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3sniezC");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                  child: ElevatedButton(onPressed: (){_launchUrl(Strings.VFXFoodPSLink);},child: Text(Strings.PlayStore,style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.common_color),)),
                                 ),
                               ],
                             ),
@@ -418,23 +419,23 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                 Expanded(
                   child: Column(
                     children: [
-                      Center(child: Text("Vanilai",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Center(child: Text(Strings.Vanilai,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               flex: 5,
-                              child: Image.asset("assets/projects/1.png")),
+                              child: Image.asset(Strings.VanilaiAsset)),
                           Flexible(
                             flex: 8,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Vanilai is a simple weather app built with a open API providing necessary weather updates of users current location",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+                                Text(Strings.VanilaiDescription,style: GoogleFonts.getFont(Strings.OSFONT,color: textcolor),  ),
 
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8),
-                                  child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3xNRytQ");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                  child: ElevatedButton(onPressed: (){_launchUrl(Strings.VanilaiPSLink);},child: Text(Strings.PlayStore,style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.common_color),)),
                                 ),
                               ],
                             ),
@@ -448,23 +449,23 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                 Expanded(
                   child: Column(
                     children: [
-                      Center(child: Text("Ballot",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Center(child: Text(Strings.Ballot,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               flex: 5,
-                              child: Image.asset("assets/projects/3.png")),
+                              child: Image.asset(Strings.BallotAsset)),
                           Flexible(
                             flex: 8,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Ballot is a election application created for conducting student council election.This was my final year college project",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+                                Text(Strings.BallotDescription,style: GoogleFonts.getFont(Strings.OSFONT,color: textcolor),  ),
 
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8),
-                                  child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev/final_year_project.git");},child: Text("Github",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                  child: ElevatedButton(onPressed: (){_launchUrl(Strings.BallotPSLink);},child: Text(Strings.Github,style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.common_color),)),
                                 ),
                               ],
                             ),
@@ -479,42 +480,42 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
             ),
           )
       ):Container(
-          color: accent_color,
+          color: Consts.accent_color,
           height: 1500,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Projects",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+                ElevatedButton(onPressed: (){}, child: Text(Strings.PROJECTS,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
-                          side: BorderSide(color: other_accent_color)
+                          side: BorderSide(color: Consts.OAC)
                       )
                   ),
-                  backgroundColor: MaterialStateProperty.all<Color>(other_accent_color),
+                  backgroundColor: MaterialStateProperty.all<Color>(Consts.OAC),
                 )
                 ),
                 Expanded(
                   child: Column(
                     children: [
-                      Center(child: Text("VFXfood",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Center(child: Text(Strings.VFXfood,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               flex: 5,
-                              child: Image.asset("assets/projects/2.png")),
+                              child: Image.asset(Strings.VFXfoodAsset)),
                           Flexible(
                             flex: 8,
                             child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("This was my internship project with Mist VFX company. VFX FOOD is an online VFX & Animation reporter. Which provides industries latest & trusted information of news, updates, articles, interviews, and jobs all over the world.",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+                              Text(Strings.VFXFoodDescription,style: GoogleFonts.getFont(Strings.OSFONT,color: textcolor),  ),
 
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8),
-                                child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3sniezC");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                child: ElevatedButton(onPressed: (){_launchUrl(Strings.VFXFoodPSLink);},child: Text(Strings.PlayStore,style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.common_color),)),
                               ),
                             ],
                           ),
@@ -528,23 +529,23 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                 Expanded(
                   child: Column(
                     children: [
-                      Center(child: Text("Vanilai",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Center(child: Text(Strings.Vanilai,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               flex: 5,
-                              child: Image.asset("assets/projects/1.png")),
+                              child: Image.asset(Strings.VanilaiAsset)),
                           Flexible(
                             flex: 8,
                             child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Vanilai is a simple weather app built with a open API providing necessary weather updates of users current location",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+                              Text(Strings.VanilaiDescription,style: GoogleFonts.getFont(Strings.OSFONT,color: textcolor),  ),
 
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8),
-                                child: ElevatedButton(onPressed: (){_launchUrl("https://bit.ly/3xNRytQ");},child: Text("PlayStore",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                child: ElevatedButton(onPressed: (){_launchUrl(Strings.VanilaiPSLink);},child: Text(Strings.PlayStore,style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.common_color),)),
                               ),
                             ],
                           ),
@@ -558,23 +559,23 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                 Expanded(
                   child: Column(
                     children: [
-                      Center(child: Text("Ballot",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                      Center(child: Text(Strings.Ballot,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               flex: 5,
-                              child: Image.asset("assets/projects/3.png")),
+                              child: Image.asset(Strings.BallotAsset)),
                           Flexible(
                           flex: 8,
                             child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Ballot is a election application created for conducting student council election.This was my final year college project",style: GoogleFonts.getFont('Open Sans',color: textcolor),  ),
+                              Text(Strings.BallotDescription,style: GoogleFonts.getFont(Strings.OSFONT,color: textcolor),  ),
 
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8),
-                                child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev/final_year_project.git");},child: Text("Github",style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(common_color),)),
+                                child: ElevatedButton(onPressed: (){_launchUrl(Strings.BallotPSLink);},child: Text(Strings.Github,style: TextStyle(color:textcolor),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.common_color),)),
                               ),
                             ],
                           ),
@@ -598,18 +599,18 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
 
   Widget WorkSamples(height,context){
     return Container(
-      color: common_color,
+      color: Consts.common_color,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          ElevatedButton(onPressed: (){}, child: Text("Work Samples",style: GoogleFonts.getFont('Staatliches',color: common_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+          ElevatedButton(onPressed: (){}, child: Text(Strings.WORKSAMPLES,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.common_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(color: other_accent_color)
+                    side: BorderSide(color: Consts.OAC)
                 )
             ),
-            backgroundColor: MaterialStateProperty.all<Color>(other_accent_color),
+            backgroundColor: MaterialStateProperty.all<Color>(Consts.OAC),
           )
           ),
           Column(
@@ -617,22 +618,22 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(child: Text("Github Profile",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                  Center(child: Text(Strings.GithubProfile,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.OAC),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: ElevatedButton(onPressed: (){_launchUrl("https://github.com/arun7dev");},child: Text("Github",style: TextStyle(color:common_color),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(other_accent_color),)),
+                    child: ElevatedButton(onPressed: (){_launchUrl(Strings.GithubProfileLine);},child: Text(Strings.Github,style: TextStyle(color:Consts.common_color),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.OAC),)),
                   ),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(child: Text("Developer account link",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
+                  Center(child: Text(Strings.GoogleDevleoperAccount,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.OAC),textScaleFactor:2 ,maxLines: 2,textAlign: TextAlign.center,)),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: ElevatedButton(onPressed: (){_launchUrl("https://play.google.com/store/apps/dev?id=5595603757420873953");},child: Text("Developer account",style: TextStyle(color:common_color),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(other_accent_color),)),
+                    child: ElevatedButton(onPressed: (){_launchUrl(Strings.GoogleDevleoperAccoutLink);},child: Text(Strings.DeveloperAccount,style: TextStyle(color:Consts.common_color),),style: ButtonStyle(    backgroundColor: MaterialStateProperty.all(Consts.OAC),)),
                   ),
                 ],
               ),
@@ -645,7 +646,7 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
 
   Widget Contact(height,context){
     return  Container(
-        color: accent_color,
+        color: Consts.OAC,
 
         //height: height,
         child:Padding(
@@ -656,14 +657,14 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
 
                   onPressed: (){
 
-                  }, child: Text("Get in touch",style: GoogleFonts.getFont('Staatliches',color: other_accent_color),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
+                  }, child: Text(Strings.Getintouch,style: GoogleFonts.getFont(Strings.StaatlichesFONT,color: Consts.OAC),textScaleFactor:4 ,maxLines: 2,textAlign: TextAlign.left,),style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
-                        side: BorderSide(color: common_color!)
+                        side: BorderSide(color: Consts.common_color!)
                     )
                 ),
-                backgroundColor: MaterialStateProperty.all<Color>(common_color!),
+                backgroundColor: MaterialStateProperty.all<Color>(Consts.common_color!),
               )
               ),
               Column(mainAxisAlignment: MainAxisAlignment.center,
@@ -671,7 +672,7 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      color: common_color,
+                      color: Consts.common_color,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -680,9 +681,9 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.house,size: 50,color: other_accent_color,),
-                              Text("Location",style: TextStyle(fontWeight: FontWeight.bold,color: other_accent_color),textScaleFactor: 2,),
-                              Text("Chennai,India",style: TextStyle(color: other_accent_color),textScaleFactor: 1,),
+                              Icon(Icons.house,size: 50,color: Consts.OAC,),
+                              Text(Strings.Location,style: TextStyle(fontWeight: FontWeight.bold,color: Consts.OAC),textScaleFactor: 2,),
+                              Text(Strings.LocationName,style: TextStyle(color: Consts.OAC),textScaleFactor: 1,),
                             ],
                           ),
                         ),
@@ -692,7 +693,7 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      color: common_color,
+                      color: Consts.common_color,
 
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -704,9 +705,9 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
 
                             children: [
 
-                              Icon(Icons.phone,size: 50,color: other_accent_color,),
-                              Text("Phone",style: TextStyle(fontWeight: FontWeight.bold,color: other_accent_color),textScaleFactor: 2,),
-                              Text("8072269982",style: TextStyle(color: other_accent_color),textScaleFactor: 1,),
+                              Icon(Icons.phone,size: 50,color: Consts.OAC,),
+                              Text(Strings.Phone,style: TextStyle(fontWeight: FontWeight.bold,color: Consts.OAC),textScaleFactor: 2,),
+                              Text(Strings.PhoneName,style: TextStyle(color: Consts.OAC),textScaleFactor: 1,),
                             ],
                           ),
                         ),
@@ -722,7 +723,7 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                           launchMailto();
                         },
                         child: Card(
-                          color: common_color,
+                          color: Consts.common_color,
 
 
                           child: Padding(
@@ -733,9 +734,9 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
                                 crossAxisAlignment: CrossAxisAlignment.center,
 
                                 children: [
-                                  Icon(Icons.email,size: 50,color: other_accent_color,),
-                                  Text("Email",style: TextStyle(fontWeight: FontWeight.bold,color: other_accent_color),textScaleFactor: 2,),
-                                  Text("arun042000@gmail.com",style: TextStyle(color: other_accent_color),textScaleFactor: 1,),
+                                  Icon(Icons.email,size: 50,color: Consts.OAC,),
+                                  Text(Strings.Email,style: TextStyle(fontWeight: FontWeight.bold,color: Consts.OAC),textScaleFactor: 2,),
+                                  Text(Strings.EmailName,style: TextStyle(color: Consts.OAC),textScaleFactor: 1,),
                                 ],
                               ),
                             ),
@@ -760,7 +761,7 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
       secondChild: Container(
         width: ih,
         height: ih,
-        child: Center(child: Text(title,style: GoogleFonts.getFont('Work Sans',color: common_color,fontSize: 10),)),),
+        child: Center(child: Text(title,style: GoogleFonts.getFont(Strings.WSFONT,color: Consts.common_color,fontSize: 10),)),),
     );
   }
 
@@ -769,11 +770,11 @@ class _MyMobileBodyState extends State<MyMobileBody>  with TickerProviderStateMi
       padding: const EdgeInsets.all(4.0),
       child: OutlinedButton(
         child: Text(title,
-          style: GoogleFonts.getFont('Work Sans'),
+          style: GoogleFonts.getFont(Strings.WSFONT),
         ),
         style: OutlinedButton.styleFrom(
-          primary: other_accent_color,
-          side: BorderSide(color: other_accent_color, width: 2),
+          primary: Consts.OAC,
+          side: BorderSide(color: Consts.OAC, width: 2),
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
         ),
         onPressed: () {
@@ -796,7 +797,7 @@ void _launchUrl(url) async {
 
 launchMailto() async {
   final mailtoLink = Mailto(
-    to: ['arun042000@gmail.com'],
+    to: [Strings.EmailName],
   );
   // Convert the Mailto instance into a string.
   // Use either Dart's string interpolation
