@@ -43,6 +43,8 @@ dependencies:
   url_launcher:
   mailto: ^2.0.0
   animated_background:
+  scroll_to_index: ^3.0.1
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:

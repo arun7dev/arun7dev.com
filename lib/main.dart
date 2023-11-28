@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'homepage.dart';
+import 'package:provider/provider.dart';
+import 'package:arun_portfolio_2/provider/change_color_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,10 +14,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorChangeNotifier colorChangeNotifier = ColorChangeNotifier();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
-      //theme: ThemeData(primarySwatch: Colors),
+      home: ChangeNotifierProvider(
+        create: (context) => colorChangeNotifier,
+        child: HomePage(),
+      ),
     );
   }
 }
