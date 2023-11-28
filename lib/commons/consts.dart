@@ -105,7 +105,7 @@ class Strings{
 
 
 class Consts {
-  static Color? _commonColor = Colors.orange;
+  static Color? _commonColor = c1;
   static Color accentColor = Colors.black;
   static Color OAC = Colors.white;
 
