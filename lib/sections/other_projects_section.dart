@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../core/constants/strings.dart';
 import '../core/constants/fonts.dart';
+import '../widgets/reveal_on_scroll.dart';
 
 // ─────────────────────────────────────────────
 // Data model
@@ -103,38 +106,47 @@ class _OtherProjectsSectionState extends State<OtherProjectsSection> {
     final padding = isMobile ? 20.0 : 80.0;
 
     return Container(
-      //color: const Color(0xFF0A0A0F),
-      padding: EdgeInsets.symmetric(horizontal: padding, vertical: 80),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ── Section header ──
-          Text(
-            AppStrings.notableNumber,
-            style: AppFonts.dots(
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 2,
-              color: Theme.of(context).primaryColor,
+        padding: EdgeInsets.symmetric(
+            horizontal: padding, 
+            vertical: isMobile ? 50 : 80),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── Section header ──
+            RevealOnScroll(
+              id: 'notable-title',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.notableNumber,
+                    style: AppFonts.dots(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    AppStrings.notableTitle,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w800,
+                      color: Theme.of(context).textTheme.displayLarge?.color,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            AppStrings.notableTitle,
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-              color: Theme.of(context).textTheme.displayLarge?.color,
-              letterSpacing: -0.5,
-            ),
-          ),
-          const SizedBox(height: 32),
+            const SizedBox(height: 32),
 
-          // ── Bento grid ──
-          isMobile ? _buildMobileList() : _buildDesktopGrid(),
-        ],
-      ),
-    );
+            // ── Bento grid ──
+            isMobile ? _buildMobileList() : _buildDesktopGrid(),
+          ],
+        ),
+      );
   }
 
   // ─── Mobile: vertical list ───────────────────
@@ -143,11 +155,16 @@ class _OtherProjectsSectionState extends State<OtherProjectsSection> {
       children: List.generate(_projects.length, (i) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 16),
-          child: _BentoCard(
-            project: _projects[i],
-            isExpanded: _expandedIndex == i,
-            onTap: () => _toggleCard(i),
-            isMobile: true,
+          child: RevealOnScroll(
+            id: 'mobile-bento-$i',
+            delay: const Duration(milliseconds: 100),
+            slideOffset: 30.0,
+            child: _BentoCard(
+              project: _projects[i],
+              isExpanded: _expandedIndex == i,
+              onTap: () => _toggleCard(i),
+              isMobile: true,
+            ),
           ),
         );
       }),
@@ -215,11 +232,16 @@ class _OtherProjectsSectionState extends State<OtherProjectsSection> {
                   width: cardWidth,
                   margin: EdgeInsets.only(
                       right: j < rowProjects.length - 1 ? gap : 0),
-                  child: _BentoCard(
-                    project: rowProjects[j],
-                    isExpanded: isExpanded,
-                    onTap: () => _toggleCard(idx),
-                    isMobile: false,
+                  child: RevealOnScroll(
+                    id: 'desktop-bento-$idx',
+                    delay: Duration(milliseconds: j * 100),
+                    slideOffset: 40.0,
+                    child: _BentoCard(
+                      project: rowProjects[j],
+                      isExpanded: isExpanded,
+                      onTap: () => _toggleCard(idx),
+                      isMobile: false,
+                    ),
                   ),
                 );
               }),
@@ -274,8 +296,8 @@ class _BentoCardState extends State<_BentoCard>
           curve: Curves.easeOutCubic,
           height: widget.isMobile ? (exp ? 380.0 : 180.0) : double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark 
-                ? const Color(0xFF13131A) 
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF13131A)
                 : Colors.white,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
@@ -344,7 +366,8 @@ class _BentoCardState extends State<_BentoCard>
                         ? 0.07
                         : 0.04,
                 child: CustomPaint(
-                  painter: _GridPatternPainter(isDark: Theme.of(context).brightness == Brightness.dark),
+                  painter: _GridPatternPainter(
+                      isDark: Theme.of(context).brightness == Brightness.dark),
                   size: Size.infinite,
                 ),
               ),
@@ -367,9 +390,15 @@ class _BentoCardState extends State<_BentoCard>
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
-                      Theme.of(context).scaffoldBackgroundColor.withOpacity(0.6),
-                      Theme.of(context).scaffoldBackgroundColor.withOpacity(0.95),
+                      Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withOpacity(0.1),
+                      Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withOpacity(0.6),
+                      Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withOpacity(0.95),
                     ],
                     stops: const [0.0, 0.5, 1.0],
                   ),
@@ -390,7 +419,7 @@ class _BentoCardState extends State<_BentoCard>
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 2,
-                        color: Theme.of(context).brightness == Brightness.dark 
+                        color: Theme.of(context).brightness == Brightness.dark
                             ? p.accentColor.withOpacity(0.8)
                             : p.accentColor,
                       ),
@@ -434,7 +463,11 @@ class _BentoCardState extends State<_BentoCard>
                           p.desc,
                           style: TextStyle(
                             fontSize: 13,
-                            color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.8),
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.color
+                                ?.withOpacity(0.8),
                             height: 1.65,
                           ),
                         ),
@@ -494,9 +527,13 @@ class _BentoCardState extends State<_BentoCard>
                       child: Icon(
                         Icons.add,
                         size: 14,
-                        color: exp 
-                            ? p.accentColor 
-                            : Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.5),
+                        color: exp
+                            ? p.accentColor
+                            : Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.color
+                                ?.withOpacity(0.5),
                       ),
                     ),
                   ),
@@ -582,7 +619,9 @@ class _ViewProjectButtonState extends State<_ViewProjectButton> {
           child: Text(
             '↗  VIEW PROJECT',
             style: GoogleFonts.dotGothic16(
-              color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,
               fontWeight: FontWeight.w700,
               letterSpacing: 2,
               fontSize: 14,
@@ -595,8 +634,10 @@ class _ViewProjectButtonState extends State<_ViewProjectButton> {
 
   Future<void> _launchUrl(String urlString) async {
     final uri = Uri.parse(urlString);
-    if (await canLaunchUrl(uri)) {
+    try {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      debugPrint('Could not launch $urlString: $e');
     }
   }
 }
@@ -614,7 +655,7 @@ class _DisabledButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark 
+        color: Theme.of(context).brightness == Brightness.dark
             ? Colors.white.withOpacity(0.03)
             : Colors.black.withOpacity(0.03),
         border: Border.all(
@@ -660,5 +701,6 @@ class _GridPatternPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_GridPatternPainter oldDelegate) => oldDelegate.isDark != isDark;
+  bool shouldRepaint(_GridPatternPainter oldDelegate) =>
+      oldDelegate.isDark != isDark;
 }

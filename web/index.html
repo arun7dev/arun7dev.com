@@ -33,24 +33,178 @@
   <title>Arun</title>
   <link rel="manifest" href="manifest.json">
   <style>
-  body {
-  background-color: black;
-}
-      .container {
-        width: 100vw;
-        height: 100vh;
-        display: flex; /* Default Axis is X*/
-        justify-content: center; /* Main Axis */
-        align-items: center; /* Cross Axis */
-      }      .indicator{
-        width: 50vw;
-      }
-</style>
+    body {
+      background-color: #0A0A0F;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+    body {
+      background-color: #000000;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'DotGothic16', sans-serif;
+    }
+    #loading_indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #000000;
+      z-index: 9999;
+    }
+    #data_canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    .loader-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: crosshair;
+    }
+    .progress-wrapper {
+      width: 300px;
+      margin-top: 20px;
+    }
+    .progress-bar {
+      color: #CCFF00;
+      font-size: 20px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
+      white-space: pre;
+    }
+    .status-text {
+      color: #CCFF00;
+      font-size: 14px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+    .percentage {
+      margin-top: 10px;
+      color: rgba(204, 255, 0, 0.5);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    .vignette {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 0 0 200px rgba(0,0,0,1);
+      pointer-events: none;
+    }
+    .kernel-panic {
+      background-color: #FF0033 !important;
+      animation: flash 0.1s infinite;
+    }
+    @keyframes flash {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
 </head>
-<body style="overflow: hidden">
-<div id="loading_indicator" class="container">
-  <img class="indicator" src="./assets/loading.gif" />
-</div>
+<body>
+  <div id="loading_indicator">
+    <canvas id="data_canvas"></canvas>
+    <div class="vignette"></div>
+    
+    <div class="loader-content" onclick="triggerPanic()">
+      <div id="status_label" class="status-text">SYSTEM.BOOTING</div>
+      <div class="progress-wrapper">
+        <div id="bar" class="progress-bar">▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒</div>
+      </div>
+      <div id="percent_label" class="percentage">00%</div>
+    </div>
+
+    <script>
+      const canvas = document.getElementById('data_canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const columns = Math.floor(canvas.width / 80);
+      const data = Array(columns).fill(0);
+
+      function drawData() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#CCFF00';
+        ctx.font = '10px DotGothic16';
+        
+        data.forEach((y, i) => {
+          const hex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase().padStart(6, '0');
+          const text = `0x${hex}`;
+          ctx.fillText(text, i * 80, y);
+          
+          if (y > canvas.height && Math.random() > 0.975) {
+            data[i] = 0;
+          } else {
+            data[i] = y + 15;
+          }
+        });
+        requestAnimationFrame(drawData);
+      }
+      drawData();
+
+      const bar = document.getElementById('bar');
+      const percent = document.getElementById('percent_label');
+      const totalBlocks = 20;
+      let currentProgress = 0;
+
+      const progressInterval = setInterval(() => {
+        if (currentProgress < 100) {
+          currentProgress += Math.random() * 5;
+          if (currentProgress > 100) currentProgress = 100;
+          
+          const filled = Math.floor((currentProgress / 100) * totalBlocks);
+          const empty = totalBlocks - filled;
+          bar.innerText = '█'.repeat(filled) + '▒'.repeat(empty);
+          percent.innerText = Math.floor(currentProgress).toString().padStart(2, '0') + '%';
+        } else {
+          clearInterval(progressInterval);
+        }
+      }, 200);
+
+      function triggerPanic() {
+        const indicator = document.getElementById('loading_indicator');
+        const status = document.getElementById('status_label');
+        const barElem = document.getElementById('bar');
+        
+        indicator.classList.add('kernel-panic');
+        status.innerText = "KERNEL.PANIC: OVERRIDE";
+        status.style.color = "white";
+        barElem.style.color = "white";
+        
+        setTimeout(() => {
+          indicator.classList.remove('kernel-panic');
+          status.innerText = "WELCOME.ARUN";
+          status.style.color = "#CCFF00";
+          barElem.style.color = "#CCFF00";
+        }, 1000);
+      }
+    </script>
+  </div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->

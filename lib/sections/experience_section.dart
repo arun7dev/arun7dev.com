@@ -1,10 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../widgets/hover_item.dart';
 import '../core/constants/strings.dart';
 import '../core/constants/fonts.dart';
+
+import '../widgets/reveal_on_scroll.dart';
 
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({Key? key}) : super(key: key);
@@ -16,95 +20,103 @@ class ExperienceSection extends StatelessWidget {
     final horizontalPadding = isMobile ? 30.0 : 100.0;
 
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 100),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                AppStrings.expNumber,
-                style: AppFonts.dots(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                AppStrings.expTitle,
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontSize: isMobile ? 24 : 32,
-                      fontWeight: FontWeight.bold,
+        padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding, 
+            vertical: isMobile ? 60 : 100),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RevealOnScroll(
+              id: 'exp-title',
+              slideOffset: 20.0,
+              child: Row(
+                children: [
+                  Text(
+                    AppStrings.expNumber,
+                    style: AppFonts.dots(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2,
                     ),
-              ),
-              if (!isMobile) ...[
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Container(
-                    height: 1,
-                    color: Theme.of(context).dividerColor.withOpacity(0.2),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  Text(
+                    AppStrings.expTitle,
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                          fontSize: isMobile ? 24 : 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  if (!isMobile) ...[
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        color: Theme.of(context).dividerColor.withOpacity(0.2),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(height: 80),
+            // Samsung Entry
+            _buildProjectCard(
+              context: context,
+              role: AppStrings.expSamsungRole,
+              company: AppStrings.expSamsungCompany,
+              duration: AppStrings.expSamsungDuration,
+              description: AppStrings.expSamsungDesc,
+              techStack: ['Flutter', 'BLoC', 'AutoRouter', 'Floor DB'],
+              isImageLeft: false,
+              imagePath: 'assets/images/shop_app.png',
+              playStoreUrl: AppStrings.expSamsungPlayStore,
+              appStoreUrl: AppStrings.expSamsungAppStore,
+              index: 0,
+            ),
+            SizedBox(height: isMobile ? 80 : 120),
+            // TNPHR Entry
+            _buildProjectCard(
+              context: context,
+              role: AppStrings.expTnphrRole,
+              company: AppStrings.expTnphrCompany,
+              duration: AppStrings.expTnphrDuration,
+              description: AppStrings.expTnphrDesc,
+              techStack: [
+                'Flutter',
+                'BLoC',
+                'Hive DB',
+                'Offline-First Architecture'
               ],
-            ],
-          ),
-          const SizedBox(height: 80),
-          // Samsung Entry
-          _buildProjectCard(
-            context: context,
-            role: AppStrings.expSamsungRole,
-            company: AppStrings.expSamsungCompany,
-            duration: AppStrings.expSamsungDuration,
-            description: AppStrings.expSamsungDesc,
-            techStack: ['Flutter', 'BLoC', 'AutoRouter', 'Floor DB'],
-            isImageLeft: false,
-            imagePath: 'assets/images/shop_app.png',
-            playStoreUrl: AppStrings.expSamsungPlayStore,
-            appStoreUrl: AppStrings.expSamsungAppStore,
-          ),
-          SizedBox(height: isMobile ? 80 : 120),
-          // TNPHR Entry
-          _buildProjectCard(
-            context: context,
-            role: AppStrings.expTnphrRole,
-            company: AppStrings.expTnphrCompany,
-            duration: AppStrings.expTnphrDuration,
-            description: AppStrings.expTnphrDesc,
-            techStack: [
-              'Flutter',
-              'BLoC',
-              'Hive DB',
-              'Offline-First Architecture'
-            ],
-            isImageLeft: true,
-            imagePath: 'assets/images/tnphr_app.png',
-            playStoreUrl: AppStrings.expTnphrPlayStore,
-          ),
-          SizedBox(height: isMobile ? 80 : 120),
-          // Howdy Chats Entry
-          _buildProjectCard(
-            context: context,
-            role: AppStrings.expHowdyRole,
-            company: AppStrings.expHowdyCompany,
-            duration: AppStrings.expHowdyDuration,
-            description: AppStrings.expHowdyDesc,
-            techStack: [
-              'Flutter',
-              'Real-time Messaging',
-              'Social UI',
-              'Firebase'
-            ],
-            isImageLeft: false,
-            imagePath: 'assets/images/howdy_chats_app.png',
-            playStoreUrl: AppStrings.expHowdyPlayStore,
-            appStoreUrl: AppStrings.expHowdyAppStore,
-          ),
-        ],
-      ),
-    );
+              isImageLeft: true,
+              imagePath: 'assets/images/tnphr_app.png',
+              playStoreUrl: AppStrings.expTnphrPlayStore,
+              index: 1,
+            ),
+            SizedBox(height: isMobile ? 80 : 120),
+            // Howdy Chats Entry
+            _buildProjectCard(
+              context: context,
+              role: AppStrings.expHowdyRole,
+              company: AppStrings.expHowdyCompany,
+              duration: AppStrings.expHowdyDuration,
+              description: AppStrings.expHowdyDesc,
+              techStack: [
+                'Flutter',
+                'Real-time Messaging',
+                'Social UI',
+                'Firebase'
+              ],
+              isImageLeft: false,
+              imagePath: 'assets/images/howdy_chats_app.png',
+              playStoreUrl: AppStrings.expHowdyPlayStore,
+              appStoreUrl: AppStrings.expHowdyAppStore,
+              index: 2,
+            ),
+          ],
+        ),
+      );
   }
 
   Widget _buildProjectCard({
@@ -118,6 +130,7 @@ class ExperienceSection extends StatelessWidget {
     required String imagePath,
     String? playStoreUrl,
     String? appStoreUrl,
+    required int index,
   }) {
     final bool isMobile = MediaQuery.of(context).size.width < 768;
 
@@ -263,7 +276,6 @@ class ExperienceSection extends StatelessWidget {
               );
             },
           ),
-          // The "Sheet" of primary color
           Positioned.fill(
             child: Container(
               color: Theme.of(context).primaryColor.withOpacity(0.15),
@@ -273,29 +285,33 @@ class ExperienceSection extends StatelessWidget {
       ),
     );
 
-    return isMobile
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              imageContent,
-              const SizedBox(height: 30),
-              textContent,
-            ],
-          )
-        : Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (isImageLeft) ...[
-                Expanded(flex: 5, child: imageContent),
-                const SizedBox(width: 50),
-                Expanded(flex: 6, child: textContent),
-              ] else ...[
-                Expanded(flex: 6, child: textContent),
-                const SizedBox(width: 50),
-                Expanded(flex: 5, child: imageContent),
+    return RevealOnScroll(
+      id: 'exp-card-$index',
+      slideOffset: 40.0,
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                imageContent,
+                const SizedBox(height: 30),
+                textContent,
               ],
-            ],
-          );
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (isImageLeft) ...[
+                  Expanded(flex: 5, child: imageContent),
+                  const SizedBox(width: 50),
+                  Expanded(flex: 6, child: textContent),
+                ] else ...[
+                  Expanded(flex: 6, child: textContent),
+                  const SizedBox(width: 50),
+                  Expanded(flex: 5, child: imageContent),
+                ],
+              ],
+            ),
+    );
   }
 
   Widget _buildTechChip(BuildContext context, String tech) {
@@ -343,8 +359,10 @@ class ExperienceSection extends StatelessWidget {
 
   void _launchUrl(String urlString) async {
     final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      debugPrint('Could not launch $urlString: $e');
     }
   }
 }
