@@ -1,286 +1,154 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="arun">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
+  <link rel="icon" type="image/png" href="favicon.png" />
   <title>Arun</title>
   <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      background-color: #0A0A0F;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      overflow: hidden;
     }
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
     body {
-      background-color: #000000;
-      margin: 0;
-      padding: 0;
+      background-color: #0A0A0F;
       overflow: hidden;
-      font-family: 'DotGothic16', sans-serif;
     }
+
     #loading_indicator {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      background-color: #000000;
+      justify-content: center;
+      background: #0A0A0F;
       z-index: 9999;
     }
-    #data_canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.1;
-      pointer-events: none;
-    }
-    .loader-content {
-      position: relative;
-      z-index: 10;
+
+    .loader {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      cursor: crosshair;
+      align-items: flex-start;
+      gap: 16px;
+      width: 260px;
     }
-    .progress-wrapper {
-      width: 300px;
-      margin-top: 20px;
-    }
-    .progress-bar {
-      color: #CCFF00;
-      font-size: 20px;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
-      white-space: pre;
-    }
-    .status-text {
-      color: #CCFF00;
-      font-size: 14px;
-      letter-spacing: 4px;
+
+    .loader-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: rgba(204, 255, 0, 0.4);
       text-transform: uppercase;
-      margin-bottom: 15px;
     }
-    .percentage {
-      margin-top: 10px;
-      color: rgba(204, 255, 0, 0.5);
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
-    .vignette {
-      position: absolute;
-      top: 0;
-      left: 0;
+
+    .track {
       width: 100%;
-      height: 100%;
-      box-shadow: inset 0 0 200px rgba(0,0,0,1);
-      pointer-events: none;
+      height: 1px;
+      background: rgba(204, 255, 0, 0.1);
     }
-    .kernel-panic {
-      background-color: #FF0033 !important;
-      animation: flash 0.1s infinite;
+
+    .fill {
+      height: 1px;
+      background: #CCFF00;
+      width: 0%;
+      transition: width 0.12s linear;
     }
-    @keyframes flash {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
+
+    .loader-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(204, 255, 0, 0.3);
     }
   </style>
 </head>
+
 <body>
   <div id="loading_indicator">
-    <canvas id="data_canvas"></canvas>
-    <div class="vignette"></div>
-    
-    <div class="loader-content" onclick="triggerPanic()">
-      <div id="status_label" class="status-text">SYSTEM.BOOTING</div>
-      <div class="progress-wrapper">
-        <div id="bar" class="progress-bar">▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒</div>
+    <div class="loader">
+      <span class="loader-label" id="status_label">initializing</span>
+      <div class="track">
+        <div class="fill" id="bar"></div>
       </div>
-      <div id="percent_label" class="percentage">00%</div>
+      <span class="loader-pct" id="percent_label">0%</span>
     </div>
-
-    <script>
-      const canvas = document.getElementById('data_canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const columns = Math.floor(canvas.width / 80);
-      const data = Array(columns).fill(0);
-
-      function drawData() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = '#CCFF00';
-        ctx.font = '10px DotGothic16';
-        
-        data.forEach((y, i) => {
-          const hex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase().padStart(6, '0');
-          const text = `0x${hex}`;
-          ctx.fillText(text, i * 80, y);
-          
-          if (y > canvas.height && Math.random() > 0.975) {
-            data[i] = 0;
-          } else {
-            data[i] = y + 15;
-          }
-        });
-        requestAnimationFrame(drawData);
-      }
-      drawData();
-
-      const bar = document.getElementById('bar');
-      const percent = document.getElementById('percent_label');
-      const totalBlocks = 20;
-      let currentProgress = 0;
-
-      const progressInterval = setInterval(() => {
-        if (currentProgress < 100) {
-          currentProgress += Math.random() * 5;
-          if (currentProgress > 100) currentProgress = 100;
-          
-          const filled = Math.floor((currentProgress / 100) * totalBlocks);
-          const empty = totalBlocks - filled;
-          bar.innerText = '█'.repeat(filled) + '▒'.repeat(empty);
-          percent.innerText = Math.floor(currentProgress).toString().padStart(2, '0') + '%';
-        } else {
-          clearInterval(progressInterval);
-        }
-      }, 200);
-
-      function triggerPanic() {
-        const indicator = document.getElementById('loading_indicator');
-        const status = document.getElementById('status_label');
-        const barElem = document.getElementById('bar');
-        
-        indicator.classList.add('kernel-panic');
-        status.innerText = "KERNEL.PANIC: OVERRIDE";
-        status.style.color = "white";
-        barElem.style.color = "white";
-        
-        setTimeout(() => {
-          indicator.classList.remove('kernel-panic');
-          status.innerText = "WELCOME.ARUN";
-          status.style.color = "#CCFF00";
-          barElem.style.color = "#CCFF00";
-        }, 1000);
-      }
-    </script>
   </div>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
+
   <script>
-    var serviceWorkerVersion = null;
+    const statusLabels = ['initializing', 'loading assets', 'almost there', 'done'];
+    const bar = document.getElementById('bar');
+    const pct = document.getElementById('percent_label');
+    const status = document.getElementById('status_label');
+    let progress = 0;
+
+    const ticker = setInterval(() => {
+      progress += Math.random() * 5;
+      if (progress >= 100) { progress = 100; clearInterval(ticker); }
+
+      bar.style.width = progress + '%';
+      pct.textContent = Math.floor(progress) + '%';
+      status.textContent = statusLabels[Math.min(Math.floor(progress / 33), statusLabels.length - 1)];
+    }, 200);
+  </script>
+
+  <script>
+    var serviceWorkerVersion = '{{flutter_service_worker_version}}';
     var scriptLoaded = false;
     function loadMainDartJs() {
-      if (scriptLoaded) {
-        return;
-      }
+      if (scriptLoaded) return;
       scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
+      var s = document.createElement('script');
+      s.src = 'main.dart.js';
+      s.type = 'application/javascript';
+      document.body.append(s);
     }
 
     if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
       window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
-
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
+        var url = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+        navigator.serviceWorker.register(url).then((reg) => {
+          function waitFor(sw) {
+            sw.addEventListener('statechange', () => {
+              if (sw.state == 'activated') { loadMainDartJs(); }
+            });
+          }
+          if (!reg.active && (reg.installing || reg.waiting)) {
+            waitFor(reg.installing || reg.waiting);
+          } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+            reg.update(); waitFor(reg.installing);
+          } else {
             loadMainDartJs();
           }
-        }, 4000);
+        });
+        setTimeout(() => { if (!scriptLoaded) loadMainDartJs(); }, 4000);
       });
     } else {
-      // Service workers not supported. Just drop the <script> tag.
       loadMainDartJs();
     }
   </script>
-<script>
-  window.onload = function () {
-        setTimeout(function () {
-          var loadingIndicator =                 document.getElementById("loading_indicator");
-          if (loadingIndicator) {
-            loadingIndicator.remove();
-          }
-        }, 10000);
-};
-</script>
+
+  <script>
+    window.onload = function () {
+      setTimeout(function () {
+        var el = document.getElementById('loading_indicator');
+        if (el) el.remove();
+      }, 10000);
+    };
+  </script>
 </body>
+
 </html>
