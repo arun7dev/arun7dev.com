@@ -1,7 +1,7 @@
 
-import 'package:arun_portfolio_2/responsive/desktop/desktop_body.dart';
-import 'package:arun_portfolio_2/responsive/mobile/mobile_body.dart';
-import 'package:arun_portfolio_2/responsive/responsive_layout.dart';
+import 'package:arun_portfolio_2/old_portfolio/responsive/desktop/desktop_body.dart';
+import 'package:arun_portfolio_2/old_portfolio/responsive/mobile/mobile_body.dart';
+import 'package:arun_portfolio_2/old_portfolio/responsive/responsive_layout.dart';
 import 'package:flutter/material.dart';
 
 

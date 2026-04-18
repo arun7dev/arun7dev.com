@@ -747,7 +747,7 @@ class _MyDesktopBodyState extends State<MyDesktopBody>
           style: GoogleFonts.getFont(Strings.WSFONT),
         ),
         style: OutlinedButton.styleFrom(
-          primary: Consts.OAC,
+          foregroundColor: Consts.OAC,
           side: BorderSide(color: Consts.OAC, width: 2),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),

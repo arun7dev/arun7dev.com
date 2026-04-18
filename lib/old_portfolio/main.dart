@@ -1,0 +1,26 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:flutter/material.dart';
+import 'homepage.dart';
+import 'package:provider/provider.dart';
+import 'package:arun_portfolio_2/old_portfolio/provider/change_color_provider.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorChangeNotifier colorChangeNotifier = ColorChangeNotifier();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ChangeNotifierProvider(
+        create: (context) => colorChangeNotifier,
+        child: HomePage(),
+      ),
+    );
+  }
+}
