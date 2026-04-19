@@ -120,7 +120,7 @@ class _ContactSectionState extends State<ContactSection> {
                 _buildSocialIcon(
                     context, Icons.phone, '8072269982', 'tel:8072269982'),
                 _buildSocialIcon(
-                    context, Icons.location_on, 'Chennai, India', ''),
+                    context, Icons.location_on, 'Chennai, India', 'https://www.google.com/maps/search/?api=1&query=Chennai,+India'),
               ],
             ),
             const SizedBox(height: 80),
