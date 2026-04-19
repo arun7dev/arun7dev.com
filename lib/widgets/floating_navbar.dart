@@ -19,8 +19,9 @@ class FloatingNavbar extends StatelessWidget {
     final bool isMobile = screenWidth < 768;
     
     final List<String> items = isMobile 
-        ? ['Home', 'Skills', 'Exp', 'Work', 'Cont'] 
-        : ['Home', 'Skills', 'Experience', 'Projects', 'Contact'];
+        ? ['Home', 'Skills', 'Exp', 'Work', 'Actv', 'Mail'] 
+        : ['Home', 'Skills', 'Experience', 'Projects', 'Activity', 'Contact'];
+
     
     return Container(
       margin: EdgeInsets.only(bottom: isMobile ? 15 : 30),

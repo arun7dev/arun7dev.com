@@ -66,8 +66,17 @@ Worked full-stack—designing APIs and backend systems with PostgreSQL, ensuring
   static const String notableNumber = '03.';
   static const String notableTitle = 'Notable Projects';
 
+  // Contributions
+  static const String contributionNumber = '04.';
+  static const String contributionTitle = 'Project Activity';
+  static const String contributionIntro =
+      'A summary of my professional contributions and development activity within office projects, tracked through Git. Reflecting consistent delivery and codebase maintenance.';
+
+
+
   // Contact
-  static const String contactNumber = '04.';
+  static const String contactNumber = '05.';
+
   static const String contactEyebrow = "What's Next?";
   static const String contactTitle = 'Get In Touch';
   static const String contactIntro =

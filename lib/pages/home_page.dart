@@ -7,7 +7,9 @@ import '../sections/hero_section.dart';
 import '../sections/skills_section.dart';
 import '../sections/experience_section.dart';
 import '../sections/other_projects_section.dart';
+import '../sections/contribution_section.dart';
 import '../sections/contact_section.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,7 +26,9 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _skillsKey = GlobalKey();
   final GlobalKey _experienceKey = GlobalKey();
   final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contributionKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
+
 
   @override
   void initState() {
@@ -53,9 +57,12 @@ class _HomePageState extends State<HomePage> {
       newIndex = 2;
     } else if (offset < 4000) {
       newIndex = 3;
-    } else {
+    } else if (offset < 4800) {
       newIndex = 4;
+    } else {
+      newIndex = 5;
     }
+
 
     if (newIndex != _currentIndex) {
       setState(() {
@@ -74,7 +81,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final keys = [_heroKey, _skillsKey, _experienceKey, _projectsKey, _contactKey];
+    final keys = [_heroKey, _skillsKey, _experienceKey, _projectsKey, _contributionKey, _contactKey];
+
     final bool isMobile = MediaQuery.of(context).size.width < 768;
 
     Widget content = Stack(
@@ -96,7 +104,9 @@ class _HomePageState extends State<HomePage> {
                     child: const ExperienceSection(),
                   ),
                   OtherProjectsSection(key: _projectsKey),
+                  ContributionSection(key: _contributionKey),
                   ContactSection(key: _contactKey),
+
                   const SizedBox(height: 100),
                 ],
               ),
