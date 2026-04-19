@@ -24,7 +24,7 @@ class PortfolioApp extends StatelessWidget {
           valueListenable: primaryColorNotifier,
           builder: (_, Color currentPrimary, __) {
             return MaterialApp(
-              title: 'Arun - Flutter Developer',
+              title: 'Arun',
               debugShowCheckedModeBanner: false,
               theme: AppTheme.getLightTheme(currentPrimary),
               darkTheme: AppTheme.getDarkTheme(currentPrimary),

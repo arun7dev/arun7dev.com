@@ -20,36 +20,34 @@ class GridSymbolSelector extends StatelessWidget {
       valueListenable: gridSymbolNotifier,
       builder: (context, currentSymbol, _) {
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          width: 250,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Theme.of(context).primaryColor.withOpacity(0.3),
-            ),
+            color: Colors.white.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: symbols.map((s) {
               final bool isSelected = currentSymbol == s['value'];
               return HoverItem(
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () => gridSymbolNotifier.value = s['value']!,
+                  borderRadius: BorderRadius.circular(8),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: isSelected 
-                          ? Theme.of(context).primaryColor.withOpacity(0.2)
+                          ? Theme.of(context).primaryColor.withOpacity(0.15)
                           : Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       s['icon']!,
                       style: TextStyle(
-                        fontSize: 18,
-                        color: isSelected ? Colors.white : Colors.white.withOpacity(0.5),
+                        fontSize: 16,
+                        color: isSelected ? Colors.white : Colors.white.withOpacity(0.4),
                       ),
                     ),
                   ),

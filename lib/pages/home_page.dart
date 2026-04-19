@@ -75,54 +75,55 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final keys = [_heroKey, _skillsKey, _experienceKey, _projectsKey, _contactKey];
+    final bool isMobile = MediaQuery.of(context).size.width < 768;
+
+    Widget content = Stack(
+      children: [
+        SingleChildScrollView(
+          controller: _scrollController,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Column(
+                children: [
+                  HeroSection(
+                    key: _heroKey,
+                    onCheckOutPressed: () => _scrollToSection(_experienceKey),
+                  ),
+                  SkillsSection(key: _skillsKey),
+                  Container(
+                    key: _experienceKey,
+                    child: const ExperienceSection(),
+                  ),
+                  OtherProjectsSection(key: _projectsKey),
+                  ContactSection(key: _contactKey),
+                  const SizedBox(height: 100),
+                ],
+              ),
+            ),
+          ),
+        ),
+        // Floating Settings (Top Right)
+        Positioned(
+          top: 20,
+          right: 20,
+          child: const SafeArea(child: FloatingSettings()),
+        ),
+        // Floating Navbar (Bottom Center)
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: FloatingNavbar(
+            currentIndex: _currentIndex,
+            onTap: (index) => _scrollToSection(keys[index]),
+          ),
+        ),
+      ],
+    );
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: PerspectiveGrid(
-        child: InteractiveCursor(
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                controller: _scrollController,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: Column(
-                      children: [
-                        HeroSection(
-                          key: _heroKey,
-                          onCheckOutPressed: () => _scrollToSection(_experienceKey),
-                        ),
-                        SkillsSection(key: _skillsKey),
-                        Container(
-                          key: _experienceKey,
-                          child: const ExperienceSection(),
-                        ),
-                        OtherProjectsSection(key: _projectsKey),
-                        ContactSection(key: _contactKey),
-                        const SizedBox(height: 100),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              // Floating Settings (Bottom Right)
-              Positioned(
-                bottom: 20,
-                right: 20,
-                child: const FloatingSettings(),
-              ),
-              // Floating Navbar (Bottom Center)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingNavbar(
-                  currentIndex: _currentIndex,
-                  onTap: (index) => _scrollToSection(keys[index]),
-                ),
-              ),
-            ],
-          ),
-        ),
+        child: isMobile ? content : InteractiveCursor(child: content),
       ),
     );
   }

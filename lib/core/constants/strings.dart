@@ -4,14 +4,14 @@ class AppStrings {
   static const String heroName = 'Arun.';
   static const String heroSubtitle = 'I craft exceptional Flutter experiences.';
   static const String heroDescription =
-      "Flutter Developer with 5+ years of experience building high-performance, scalable mobile apps — from architecture to pixel-perfect UI.";
+      "Flutter Developer with 5+ years of experience building scalable, high-performance mobile products, owning end-to-end delivery—from architecture and performance optimization to pixel-perfect, user-centric UI.";
   static const String heroCTA = 'See My Work';
 
   // Skills
   static const String skillsNumber = '01.';
   static const String skillsTitle = 'My Arsenal';
   static const String skillsIntro =
-      'Five years of hands-on work across mobile, web, and backend — with a sharp focus on Flutter, Dart, and the tools that ship production-ready software.';
+      'Building scalable, high-performance applications with Flutter and Dart, backed by cross-platform experience across mobile, web, and backend systems. Focused on clean architecture, reusable UI systems, and seamless integrations. Driven by performance, precision, and shipping production-ready software.';
   static const String skillsFrameworks = 'Frameworks & Tools';
   static const String skillsLanguages = 'Languages';
   static const String skillsDatabases = 'Databases & Architecture';
@@ -23,8 +23,13 @@ class AppStrings {
   static const String expSamsungRole = 'Team Lead & Core Architect';
   static const String expSamsungCompany = 'Samsung Shop App';
   static const String expSamsungDuration = '2024 – Present';
-  static const String expSamsungDesc =
-      "Samsung's official retail app — enabling millions of users to browse, compare, and purchase products with exclusive deals.\n\nLeading a squad of 5, I collaborate closely with PMs on feature delivery and serve on the core architecture team. I spearheaded the modularization of the app, taking ownership of multiple modules to drive scalability and long-term maintainability.";
+  static const String expSamsungDesc = """
+Samsung’s official retail app, serving millions of users across browsing, comparison, and purchases. Owned key flows including product listing, checkout, payments, authentication, and personalization.
+
+Leading a squad of 5 engineers, collaborating with PMs and designers to deliver end-to-end features. Core contributor to architecture, driving feature-based modularization to improve scalability and maintainability.
+
+Built with Flutter using Bloc, with a strong focus on performance—UI smoothness, API caching, lazy loading, and refined animations. Developed reusable internal packages and streamlined releases via GitHub Actions CI/CD.
+""";
   static const String expSamsungPlayStore =
       "https://play.google.com/store/apps/details?id=com.samsung.ecomm";
   static const String expSamsungAppStore =
@@ -33,16 +38,26 @@ class AppStrings {
   static const String expTnphrRole = 'Senior Flutter Developer';
   static const String expTnphrCompany = 'TNPHR · Tamil Nadu Government';
   static const String expTnphrDuration = '2022 – 2024';
-  static const String expTnphrDesc =
-      "Tamil Nadu Population Health Registry — one of India's largest digital health platforms, serving 80M+ residents. Built in collaboration with the Google Health AI team as the single source of truth for population health data.\n\nBuilt the app from the ground up, migrating from native Android to Flutter. Engineered a robust offline-first architecture that syncs data from 18 APIs seamlessly once connectivity is restored.";
+  static const String expTnphrDesc = """
+Tamil Nadu Population Health Registry—one of India’s largest digital health platforms, serving 80M+ residents, built with the Google Health AI team as a unified source of population health data.
+
+Part of a 3-member team that migrated the app from native Android to Flutter in just one month—a large-scale, high-impact transition for a mission-critical app used daily by government field workers.
+
+Engineered an offline-first architecture using Hive, enabling users to preload large datasets, operate seamlessly in low-connectivity regions, and reliably sync across 18 APIs once online. Built with Flutter, Bloc, and Dio, focusing on resilience, data integrity, and performance in real-world conditions.
+""";
   static const String expTnphrPlayStore =
       "https://play.google.com/store/search?q=tnphr&c=apps";
 
   static const String expHowdyRole = 'Flutter Developer';
   static const String expHowdyCompany = 'Howdy Chats';
   static const String expHowdyDuration = '2022 – 2024';
-  static const String expHowdyDesc =
-      "A cross-platform Instagram + WhatsApp-style app — combining social feeds, stories, and real-time messaging into one seamless experience, built for both web and mobile.\n\nOne of two engineers who architected and built the entire frontend from scratch using Flutter. Scaled to thousands of active users, with a focus on real-time messaging performance, social feed interactions, and a unified codebase across platforms.";
+  static const String expHowdyDesc = """
+A cross-platform social platform combining feeds, stories, and real-time messaging, built for web and mobile.
+
+One of two founding engineers who architected and built the frontend from scratch using Flutter, establishing the foundation for a product now actively used at scale. Delivered core social features including short-form video (reels-style), posts, events, and real-time communication with voice and video calling.
+
+Worked full-stack—designing APIs and backend systems with PostgreSQL, ensuring efficient data flow and seamless real-time interactions across the platform.
+""";
   static const String expHowdyPlayStore =
       "https://play.google.com/store/search?q=howdy+chats&c=apps";
   static const String expHowdyAppStore =

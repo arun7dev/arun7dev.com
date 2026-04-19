@@ -13,32 +13,26 @@ class ColorSlider extends StatelessWidget {
         
         return Container(
           width: 250,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.3)),
+            color: Colors.white.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
             children: [
               const Icon(Icons.palette_outlined, size: 18),
               const SizedBox(width: 10),
               Expanded(
-                child: SliderTheme(
-                  data: SliderTheme.of(context).copyWith(
-                    trackHeight: 4,
-                    thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
-                    activeTrackColor: Theme.of(context).primaryColor,
-                  ),
                   child: Slider(
                     value: hsvColor.hue,
                     min: 0,
                     max: 360,
+                    activeColor: Theme.of(context).primaryColor,
+                    inactiveColor: Theme.of(context).primaryColor.withOpacity(0.2),
                     onChanged: (value) {
                       primaryColorNotifier.value = HSVColor.fromAHSV(1.0, value, 0.65, 1.0).toColor();
                     },
                   ),
-                ),
               ),
             ],
           ),
